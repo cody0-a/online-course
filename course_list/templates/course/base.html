@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Online Course Platform{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="flex flex-col min-h-screen bg-gray-100">
+
+    <!-- Header Section -->
+    <header class="bg-blue-600 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Online Course Platform</h1>
+            <nav>
+                <ul class="flex space-x-4">
+                    <li><a href="#" class="hover:underline">Home</a></li>
+                    <li><a href="#" class="hover:underline">Courses</a></li>
+                    <li><a href="#" class="hover:underline">About</a></li>
+                    <li><a href="#" class="hover:underline">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Section -->
+    <div class="flex flex-grow container mx-auto p-4">
+        <!-- Left Sidebar -->
+        <aside class="w-1/4 bg-gray-200 p-4 rounded-lg">
+            <h2 class="font-bold text-lg">Courses</h2>
+            <ul class="mt-4 p-2 list-none text-gray-500 space-y-2 ">
+                <li><a href="{% url 'python-courses' %}" class="block p-2 hover:bg-blue-500 hover:text-white">Python</a></li>
+                <li><a href="{% url 'css-courses' %}" class="block p-2 hover:bg-blue-500 hover:text-white">css</a></li>
+                <li><a href="{% url 'html-courses' %}" class="block p-2 hover:bg-blue-500 hover:text-white">html</a></li>
+                <li><a href="{% url 'javascript-courses' %}" class="block p-2 hover:bg-blue-500 hover:text-white">javascript</a></li>
+            </ul>
+            <hr class="border-1 border-gray-400">
+            <ul class="mt-4 p-2 list-none text-gray-500 space-y-2 ">
+                <li><a href="{% url 'django-courses' %}" class="block p-2 hover:bg-blue-500 hover:text-white">Django</a></li>
+                <li><a href="{% url 'flask-courses' %}" class="block p-2 hover:bg-blue-500 hover:text-white">Flask</a></li>
+                <li><a href="{% url 'react-courses' %}" class="block p-2 hover:bg-blue-500 hover:text-white">React</a></li>            </ul>
+            <hr class="border-1 border-gray-400">
+            <ul>
+                <li><a href="{% url 'questions-and-answers' %}" class="block p-2 hover:bg-blue-500 hover:text-white text-red-500">questions and answers</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-grow bg-white p-4 rounded-lg ml-4 text-center">
+            {% block content %}
+            <!-- Dynamic content will be inserted here -->
+            <h2 class="text-xl font-semibold text-center shadow-xl">Welcome to online Course!</h2>
+            
+            {% endblock %}
+        </main>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Online Course Platform. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
