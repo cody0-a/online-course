@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Course
 from .serializers import CourseSerializer
+from .forms import CourseRegisterForm,UserProfileForm
+from django.shortcuts import redirect
 
 
 def index(request):
@@ -90,12 +92,17 @@ def javascript_courses(request):
         context = {'courses': courses}
         return render(request,'course/javascript.html',context)
     return render(request,'course/javascript.html')
+
+
+
 def html_courses(request):
     courses = Course.objects.filter(category='html')
     if courses:
         context = {'courses': courses}
         return render(request,'course/html.html',context)
     return render(request,'course/html.html')
+
+
 
 def css_courses(request):
     courses = Course.objects.filter(category='css')
@@ -105,6 +112,7 @@ def css_courses(request):
     return render(request,'course/css.html')
 
 def questions_and_answers(request):
+
     return render(request,'course/questions_and_answers.html')
         
 @api_view(['GET', 'PUT', 'DELETE'])
@@ -113,7 +121,7 @@ def course_detail(request, pk):
         course = Course.objects.get(pk=pk)
     except Course.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-
+java
     if request.method == 'GET':
         serializer = CourseSerializer(course)
         return Response(serializer.data)
@@ -128,3 +136,28 @@ def course_detail(request, pk):
     elif request.method == 'DELETE':
         course.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+def register_for_course(request, course_id):
+    course = Course.objects.get(id=course_id)
+    if request.user.is_authenticated:
+        form = CourseRegisterForm(request.POST)
+        if form.is_valid:
+            form.save()
+            return redirect(reverse("course_list:registered_student"))
+
+        else:
+            courses_forms = CourseRegisterForm(request.POST) 
+            return render(request,'course/register_for_course.html', {'courses' : courses})
+
+
+def user_profile(request):
+    if request.user.is_authenticated:
+        forms = UserProfileForm(request.POST,request.FILES)
+        if forms.is_valid:
+            forms.save()
+            return redirect('course_list:your_profile')
+
+        else:
+             
